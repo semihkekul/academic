@@ -1,0 +1,239 @@
+#include "../include/responsehandler.h"
+
+namespace NetworkServer {
+
+ResponseHandler::ResponseHandler(void)
+{
+}
+
+
+ResponseHandler::~ResponseHandler()
+{
+
+}
+
+
+void * ResponseHandler::Start( void * inp )
+{
+	ResponseHandlerInput * input =
+			(ResponseHandlerInput *) inp;
+
+	// debug
+	//cout << "Response handler started.\n";
+
+
+	int connectedSock = input->cs;
+	SynchronizationData * syncData = input->sd;
+
+	Action a;
+	bool timeOut = false;
+
+	while( true )
+	{
+
+
+		// read an action; break if invalid
+		if( ! a.ReadFromSocket_Linux(connectedSock) )
+		{
+			break;
+		}
+
+		// read an action
+		if( syncData->timeOutFlags.at(syncData->getIndex(connectedSock)) )
+		{
+			timeOut = true;
+			break;
+		}
+
+		// in case action is read set the last response time for the client
+		struct timeval currentTime;
+		gettimeofday( &currentTime, NULL);
+
+		syncData->lastResponseTime.at(
+				syncData->getIndex( connectedSock )) = currentTime;
+
+
+		//--> debug messages
+
+		// print seder info
+
+		cout << syncData->clientNames.at(
+					syncData->getIndex( connectedSock ) ) << " >>> ";
+		cout.flush();
+
+		// print a description of the action
+		switch(a.type)
+		{
+			case Message:
+				cout << " [ Message = ' "
+					 << a.theAction.message.msg << "']\n";
+				break;
+			case Motion:
+				cout << " [ Motion = ' "
+					 << a.theAction.motion.newPositionX << ", "
+					 << a.theAction.motion.newPositionY << ", "
+					 << a.theAction.motion.newPositionZ << " ']\n";
+				break;
+		}
+		cout.flush();
+		//<--
+
+
+		// send response
+
+		// add sender id
+		switch( a.type )
+		{
+			case Message:
+				{
+					char * name = strdup(
+							syncData->clientNames.at(
+								syncData->getIndex( connectedSock )).c_str() );
+
+					int nameLen = strlen(name);
+					char beautify[6] = " >>> ";
+
+					int msgLen= strlen( a.theAction.message.msg );
+
+					char * finalMsg = new char[nameLen + 6 + msgLen];
+
+					strcpy(finalMsg, "");
+					strcat(finalMsg, name);
+					strcat(finalMsg, beautify);
+					strcat(finalMsg, a.theAction.message.msg);
+
+					free( a.theAction.message.msg );
+
+					a.theAction.message.msg = NULL;
+
+					a.theAction.message.msg = strdup( finalMsg );
+
+					free( name );
+					free( finalMsg );
+				}
+				break;
+			case Motion:
+				break;
+
+		}
+
+		// acquire control
+		//syncData->seizeControl();
+
+		// send action to game engine and wait for response
+
+		// iterate through each open host connection
+		for(unsigned int i = 0; i < syncData->connectedSocks.size() ; i++)
+		{
+			// don't reply to the host itself
+			if( syncData->connectedSocks.at(i) != connectedSock )
+			{
+				int destSock = syncData->connectedSocks.at(i);
+
+
+				a.WriteToSocket_Linux( destSock );
+
+				//fcntl( destSock, F_SETFL, flags );
+			}
+
+
+		}
+
+		//release control
+		//syncData->releaseControl();
+
+	}
+
+
+	// remove connection details
+	int index = syncData->getIndex( connectedSock );
+
+	if( timeOut )
+	{
+		// debug message
+		cout << syncData->clientNames.at(syncData->getIndex( connectedSock ) ) << " timed-out.\n"
+				<< "Therefore this player will be set off-line after 10 sec.\n\n";
+		cout.flush();
+
+		SendTimeOutMessage( syncData, connectedSock);
+	}
+	else
+	{
+		// debug message
+		cout << syncData->clientNames.at(syncData->getIndex( connectedSock ) ) << " seems to have quited the game.\n"
+			<< "Therefore this player will be set off-line after 10 sec.\n\n";
+		cout.flush();
+
+	}
+
+	// probably connection is corrupted
+	// so we have to delete it
+	close( connectedSock );
+	RemoveConnectionDetails( syncData, index);
+	syncData->updateNoClients( -1 );
+
+	// wait 10 secods
+	sleep(10);
+
+
+	// !!!!!!!!!!!!!!! set player off-line !!!!!!!!!!!!!!!!!!!!1
+
+	// remove thread details
+	//RemoveThreadDetails( syncData, index);
+
+	// close the thread
+	pthread_exit(NULL);
+
+	return NULL;
+}
+
+void ResponseHandler::RemoveConnectionDetails(SynchronizationData * syncData,
+											  int index )
+{
+
+	if( syncData->clientNames.size() > 1 )
+	{
+		syncData->clientNames.erase( syncData->clientNames.begin() + index );
+	}
+	else
+	{
+		syncData->clientNames.clear();
+	}
+
+	if ( syncData->connectedSocks.size() > 1 )
+	{
+		syncData->connectedSocks.erase( syncData->connectedSocks.begin() + index );
+	}
+	else
+	{
+		syncData->connectedSocks.clear();
+	}
+
+	if ( syncData->lastResponseTime.size() > 1 )
+	{
+		syncData->lastResponseTime.erase( syncData->lastResponseTime.begin() + index );
+	}
+	else
+	{
+		syncData->lastResponseTime.clear();
+	}
+
+	if ( syncData->timeOutFlags.size() > 1 )
+	{
+		syncData->timeOutFlags.erase( syncData->timeOutFlags.begin() + index );
+	}
+	else
+	{
+		syncData->timeOutFlags.clear();
+	}
+
+}
+
+void ResponseHandler::DisplayDiagnosticMessages( string pre, Action * a )
+{
+
+}
+
+
+
+}

@@ -1,0 +1,35 @@
+#ifndef __MY_INCLUDES__
+#define __MY_INCLUDES__
+
+// linux includes
+#include <pthread.h>
+#include <semaphore.h>
+#include <unistd.h>
+#include <signal.h>
+#include <sys/wait.h>
+#include <sys/types.h>
+#include <sys/ipc.h>
+#include <sys/ioctl.h>
+#include <sys/socket.h>
+#include <sys/un.h>
+#include <sys/time.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <fcntl.h>
+#include <time.h>
+
+// stl includes
+#include <cstdlib>
+#include <cstring>
+#include <iostream>
+#include <string>
+#include <vector>
+
+// macros
+
+// time out limit in seconds
+#define TIME_OUT_LIMIT	300
+// connection monitor frequency in seconds
+#define CONNECTION_MONITOR_FREQUENCY	10
+
+#endif

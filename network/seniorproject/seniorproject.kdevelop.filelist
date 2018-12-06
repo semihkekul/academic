@@ -1,0 +1,20 @@
+# KDevelop Custom Project File List
+Makefile
+src/connectionlistener.cpp
+src/responsehandler.cpp
+src/seniorproject.cpp
+src/server.cpp
+src/synchronizationdata.cpp
+include/connectionlistener.h
+include/responsehandler.h
+include/server.h
+include/synchronizationdata.h
+include/importheaders.h
+/action.h
+/action.cpp
+include/action.h
+src/action.cpp
+/connectionmonitor.h
+/connectionmonitor.cpp
+include/connectionmonitor.h
+src/connectionmonitor.cpp

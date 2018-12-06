@@ -1,0 +1,57 @@
+#include "MyIncludes.h"
+using namespace std;
+
+struct InputResponseListenerD
+{
+	int sock;
+	FILE * output;
+};
+void * ResponseListenerD(void * inp);
+
+
+void clean_up(int code, int * sock)
+{
+	close(*sock);
+	exit(code);
+}
+
+int main(int argc, char **argv )
+{
+
+	FILE * get_message = fopen("recieved_messages.txt", "w");
+
+	int sock;
+	struct sockaddr_in cli_name;
+
+	sock = socket( AF_INET, SOCK_STREAM, 0 );
+	if( sock < 0 ){
+		perror("socket() : erraneous return.\n");
+		clean_up(1, &sock);
+	}
+
+	bzero( &cli_name, sizeof(cli_name) );
+
+	cli_name.sin_family = AF_INET;
+	cli_name.sin_addr.s_addr = inet_addr(argv[1]);
+	cli_name.sin_port = htons(atoi(argv[2]));
+
+	if( connect( sock, (struct sockaddr *)&cli_name, sizeof(cli_name) ) < 0 ){
+		perror("Establishing connection.\n");
+		clean_up(1, &sock);
+	}
+
+	while(1)
+	{
+		char a[500];
+		scanf("%s", )
+	}
+	clean_up(0, &sock);
+
+return 0;
+}
+
+void * ResponseListenerD(void * inp)
+{
+
+}
+

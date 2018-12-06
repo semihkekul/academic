@@ -1,0 +1,302 @@
+#include "../include/action.h"
+
+// class StreamAction methods
+
+// constructor & destructor
+StreamAction::StreamAction()
+{
+	actionObjectLength = 0;
+	actionObject = NULL;
+}
+
+StreamAction::StreamAction( const StreamAction & sa)
+{
+	type = sa.type;
+	actionObjectLength = sa.actionObjectLength;
+	// make a copy of the stream action object
+	actionObject = strdup(sa.actionObject);
+}
+
+StreamAction::~StreamAction()
+{
+	if( strlen(actionObject) >= 0)
+	{
+		free( actionObject );
+	}
+}
+
+// read from a socket
+bool StreamAction::ReadFromSocket_Linux( int sock )
+{
+	// read type of action stream
+	int retVal = read( sock, &type, sizeof(ActionType) );
+
+	// read nothing or some error occured
+	if(retVal <= 0)
+	{
+		return false;
+	}
+
+	// check if the type is supported
+	if( !Action::RecognizedType(type) )
+	{
+		return false;
+	}
+	else
+	{
+		// read size of action stream
+		read( sock, &actionObjectLength, sizeof(int) );
+		// allocate space for the action stream
+		actionObject = new char[actionObjectLength];
+		// read the action stream
+		read( sock, actionObject, actionObjectLength );
+
+		return true;
+	}
+
+}
+
+// write to a socket
+bool StreamAction::WriteToSocket_Linux( int sock )
+{
+	// write type of action stream
+	int retVal = write( sock, &type, sizeof(ActionType) );
+
+	if(retVal <= 0)
+	{
+		return false;
+	}
+
+	// write size of action stream
+	retVal = write( sock, &actionObjectLength, sizeof(int) );
+
+	if(retVal <= 0)
+	{
+		return false;
+	}
+
+	// write the action stream
+	retVal = write( sock, actionObject, actionObjectLength );
+
+	if(retVal <= 0)
+	{
+		return false;
+	}
+
+	return true;
+}
+
+
+// class Action methods
+
+StreamAction Action::ConvertToStream()
+{
+	StreamAction sa;
+
+	// assign the action type
+	sa.type = type;
+
+	switch( type )
+	{
+		case Message:
+			{
+				sa.actionObject = strdup(theAction.message.msg);
+				sa.actionObjectLength = strlen(sa.actionObject) + 1;
+			}
+			break;
+
+		case Motion:
+			{
+				// calculate length
+
+				sa.actionObjectLength = sizeof(theAction.motion.nameLength) +
+											strlen(theAction.motion.name)*sizeof(char);
+
+				sa.actionObjectLength += sizeof(theAction.motion.flag) +
+											sizeof(theAction.motion.newPositionX) +
+												sizeof(theAction.motion.newPositionY) +
+													sizeof(theAction.motion.newPositionZ);
+
+
+				sa.actionObject += 1;
+
+				// allocate the action object
+
+				sa.actionObject = new char[sa.actionObjectLength];
+
+				// initialize the action object
+				strcpy( sa.actionObject, "");
+
+				// add the name length
+				strncat( sa.actionObject,
+						 (char*)&theAction.motion.nameLength,
+						 	sizeof(theAction.motion.nameLength) );
+
+				// add the name
+				strncat( sa.actionObject,
+						 (char*) theAction.motion.name,
+						 strlen(theAction.motion.name) );
+
+				// add the position
+				strncat( sa.actionObject,
+						 (char *) & theAction.motion.newPositionX,
+					   		sizeof( theAction.motion.newPositionX) );
+
+				strncat( sa.actionObject,
+						 (char *) & theAction.motion.newPositionY,
+						 sizeof( theAction.motion.newPositionY) );
+
+				strncat( sa.actionObject,
+						 (char *) & theAction.motion.newPositionZ,
+						 sizeof( theAction.motion.newPositionZ) );
+
+
+			}
+			break;
+
+	}
+
+ return sa;
+}
+
+void Action::LoadFromStream( StreamAction * sa )
+{
+	type = sa->type;
+
+	switch( sa->type )
+	{
+		case Message:
+		{
+			if( sa->actionObject)
+			{
+				theAction.message.msg = strdup( sa->actionObject);
+				theAction.message.msgLength = strlen( sa->actionObject );
+			}
+
+		}
+		break;
+
+		case Motion:
+		{
+			if( sa->actionObject )
+			{
+				// read size of name
+				strncpy( (char*) &theAction.motion.nameLength,
+						  sa->actionObject,
+						  sizeof(theAction.motion.nameLength));
+
+				// allocate space for the name
+				theAction.motion.name = new char[theAction.motion.nameLength+1];
+				// read the name
+				strncpy( (char*) theAction.motion.name,
+							sa->actionObject,
+							theAction.motion.nameLength);
+				// null terminate the string
+				theAction.motion.name[theAction.motion.nameLength] = '\0';
+
+				// read flag
+				strncpy( (char*) &theAction.motion.nameLength,
+						  sa->actionObject,
+						  sizeof(theAction.motion.nameLength));
+
+				// read the position
+				strncpy( (char*) &theAction.motion.newPositionX,
+						  sa->actionObject,
+						  sizeof(theAction.motion.newPositionX));
+
+				strncpy( (char*) &theAction.motion.newPositionY,
+						  sa->actionObject,
+						  sizeof(theAction.motion.newPositionY));
+
+				strncpy( (char*) &theAction.motion.newPositionY,
+						  sa->actionObject,
+						  sizeof(theAction.motion.newPositionY));
+
+
+			}
+		}
+		break;
+
+	}
+}
+
+// read from a socket
+bool Action::ReadFromSocket_Linux(int sock)
+{
+	StreamAction sa;
+
+	Deallocate();
+
+	if( sa.ReadFromSocket_Linux(sock) )
+	{
+		LoadFromStream( &sa );
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+// write to a socket
+bool Action::WriteToSocket_Linux(int sock)
+{
+	StreamAction sa = ConvertToStream();
+
+	return sa.WriteToSocket_Linux(sock);
+}
+
+
+Action::Action()
+{
+
+}
+
+void Action::Deallocate()
+{
+
+	switch( type )
+	{
+
+		case Message:
+		{
+			if( strlen(theAction.message.msg ) >= 0 )
+				free( theAction.message.msg );
+		}
+		break;
+		case Motion:
+		{
+			if( strlen(theAction.motion.name ) >= 0 )
+				free( theAction.motion.name );
+		}
+		break;
+
+	}
+}
+
+// destructor
+Action::~Action()
+{
+
+
+
+}
+
+
+bool Action::RecognizedType(ActionType t)
+{
+	bool retVal = false;
+
+	switch(t)
+	{
+		case Message:
+		case Motion:
+			{
+				retVal  = true;
+			}
+		break;
+
+	}
+
+	return retVal;
+}

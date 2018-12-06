@@ -1,0 +1,102 @@
+#ifndef ACTION_H
+#define ACTION_H
+
+// includes most useful headers
+#include "./importheaders.h"
+using namespace std;
+
+
+// action types
+
+typedef enum { Message = 0, Motion } ActionType;
+
+
+// the format of a text message action
+
+struct MessageAction
+{
+	// message content
+
+	int msgLength;
+	char * msg;
+
+	// destinations to whom to send the message
+
+	int noDestinationPeople;
+	int * destinationPeopleNamesLengths;
+	char ** destinationPeopleNames;
+
+};
+
+
+// moving action
+
+struct MotionAction
+{
+
+	int nameLength;
+	char * name;
+
+	int newPositionX;
+	int newPositionY;
+	int newPositionZ;
+};
+
+
+// char stream representation of an action
+
+class StreamAction
+{
+  public:
+
+	ActionType type;
+
+	int actionObjectLength;
+	char * actionObject;
+
+	// constructors & destructor
+	StreamAction();
+	StreamAction(const StreamAction & sa);
+	~StreamAction();
+
+	bool ReadFromSocket_Linux( int sock );
+	bool WriteToSocket_Linux( int sock );
+
+
+};
+
+
+// the action class
+
+class Action{
+
+	private:
+
+		StreamAction ConvertToStream();
+		void	     LoadFromStream( StreamAction * sa );
+
+	public:
+
+		ActionType type;
+
+		union
+		{
+			MessageAction message;
+			MotionAction  motion;
+
+		} theAction;
+
+		bool ReadFromSocket_Linux( int sock );
+		bool WriteToSocket_Linux( int sock );
+
+		Action();
+		~Action();
+
+		void Deallocate();
+
+		static bool RecognizedType(ActionType);
+};
+
+
+
+#endif
