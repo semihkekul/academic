@@ -1,0 +1,22 @@
+﻿Build started 21.11.2014 11:26:22.
+     1>Project "C:\Users\semih.kekul\Google Drive\Akademik\Applied Parallel Programming On GPU\Assgn2\Code GPU\GPU.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating "Debug\GPU.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       AddCudaCompileDeps:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\cl.exe /E /nologo /showIncludes /TP /D__CUDACC__ /D_MBCS /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v6.5\include" /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v6.5\bin" /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v6.5\include" /I. /FIcuda_runtime.h /c "C:\Users\semih.kekul\Google Drive\Akademik\Applied Parallel Programming On GPU\Assgn2\Code GPU\cudaFile.cu" 
+       CudaBuild:
+         Compiling CUDA source file cudaFile.cu...
+         cmd.exe /C "C:\Users\semih.kekul\AppData\Local\Temp\tmp4a2e1f83e0e94265b1b06c6f350b713a.cmd"
+         "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v6.5\bin\nvcc.exe" -gencode=arch=compute_20,code=\"sm_20,compute_20\" --use-local-env --cl-version 2010 -ccbin "C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin"  -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v6.5\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v6.5\include"  -G   --keep-dir Debug -maxrregcount=0  --machine 32 --compile -cudart static  -g   -D_MBCS -Xcompiler "/EHsc /W3 /nologo /Od /Zi /RTC1 /MDd  " -o Debug\cudaFile.cu.obj "C:\Users\semih.kekul\Google Drive\Akademik\Applied Parallel Programming On GPU\Assgn2\Code GPU\cudaFile.cu"
+         
+         C:\Users\semih.kekul\Google Drive\Akademik\Applied Parallel Programming On GPU\Assgn2\Code GPU>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v6.5\bin\nvcc.exe" -gencode=arch=compute_20,code=\"sm_20,compute_20\" --use-local-env --cl-version 2010 -ccbin "C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin"  -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v6.5\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v6.5\include"  -G   --keep-dir Debug -maxrregcount=0  --machine 32 --compile -cudart static  -g   -D_MBCS -Xcompiler "/EHsc /W3 /nologo /Od /Zi /RTC1 /MDd  " -o Debug\cudaFile.cu.obj "C:\Users\semih.kekul\Google Drive\Akademik\Applied Parallel Programming On GPU\Assgn2\Code GPU\cudaFile.cu" 
+         cudaFile.cu
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v6.5\include" /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
+         main.cpp
+     1>c:\users\semih.kekul\google drive\akademik\applied parallel programming on gpu\assgn2\code gpu\cudafile.cu(19): error C2059: syntax error : '<'
+     1>Done Building Project "C:\Users\semih.kekul\Google Drive\Akademik\Applied Parallel Programming On GPU\Assgn2\Code GPU\GPU.vcxproj" (build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:04.94

@@ -1,0 +1,29 @@
+﻿Build started 21.11.2014 01:08:35.
+     1>Project "C:\Users\Semih\Google Drive\Akademik\Applied Parallel Programming On GPU\Assgn2\Code CPU\Ex.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating "x64\Debug\CPU.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\x86_amd64\CL.exe /c /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v6.5\include" /Zi /nologo /W3 /WX- /Od /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vc100.pdb" /Gd /TP /errorReport:prompt main.cpp
+         main.cpp
+     1>main.cpp(101): warning C4101: 'pDst_Host' : unreferenced local variable
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Semih\Google Drive\Akademik\Applied Parallel Programming On GPU\Assgn2\Code CPU\x64\Debug\CPU.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v6.5\lib\x64" cudart.lib nppi.lib npps.lib nppc.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"x64\Debug\CPU.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\Semih\Google Drive\Akademik\Applied Parallel Programming On GPU\Assgn2\Code CPU\x64\Debug\CPU.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Semih\Google Drive\Akademik\Applied Parallel Programming On GPU\Assgn2\Code CPU\x64\Debug\CPU.lib" /MACHINE:X64 x64\Debug\main.obj
+         Ex.vcxproj -> C:\Users\Semih\Google Drive\Akademik\Applied Parallel Programming On GPU\Assgn2\Code CPU\x64\Debug\CPU.exe
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"C:\Users\Semih\Google Drive\Akademik\Applied Parallel Programming On GPU\Assgn2\Code CPU\x64\Debug\CPU.exe;#1" /manifest x64\Debug\CPU.exe.intermediate.manifest
+       PostBuildEvent:
+         echo copy "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v6.5\bin\cudart*.dll" "C:\Users\Semih\Google Drive\Akademik\Applied Parallel Programming On GPU\Assgn2\Code CPU\x64\Debug\"
+         copy "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v6.5\bin\cudart*.dll" "C:\Users\Semih\Google Drive\Akademik\Applied Parallel Programming On GPU\Assgn2\Code CPU\x64\Debug\"
+         :VCEnd
+         copy "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v6.5\bin\cudart*.dll" "C:\Users\Semih\Google Drive\Akademik\Applied Parallel Programming On GPU\Assgn2\Code CPU\x64\Debug\"
+         C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v6.5\bin\cudart32_65.dll
+         C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v6.5\bin\cudart64_65.dll
+                 2 file(s) copied.
+       FinalizeBuildStatus:
+         Deleting file "x64\Debug\CPU.unsuccessfulbuild".
+         Touching "x64\Debug\CPU.lastbuildstate".
+     1>Done Building Project "C:\Users\Semih\Google Drive\Akademik\Applied Parallel Programming On GPU\Assgn2\Code CPU\Ex.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.84

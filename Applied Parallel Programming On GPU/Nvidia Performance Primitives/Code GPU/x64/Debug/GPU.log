@@ -1,0 +1,39 @@
+﻿Build started 21.11.2014 20:46:29.
+     1>Project "C:\Users\Semih\Google Drive\Akademik\Applied Parallel Programming On GPU\Assgn2\Code GPU\GPU.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating "x64\Debug\GPU.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       AddCudaCompileDeps:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\x86_amd64\cl.exe /E /nologo /showIncludes /TP /D__CUDACC__ /D_MBCS /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v6.5\include" /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v6.5\bin" /I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v6.5\include" /I. /FIcuda_runtime.h /c "C:\Users\Semih\Google Drive\Akademik\Applied Parallel Programming On GPU\Assgn2\Code GPU\cudaFile.cu" 
+       AddCudaCompilePropsDeps:
+       Skipping target "AddCudaCompilePropsDeps" because all output files are up-to-date with respect to the input files.
+       CudaBuild:
+         Compiling CUDA source file cudaFile.cu...
+         cmd.exe /C "C:\Users\Semih\AppData\Local\Temp\tmp09a8a8fe9108480b9d8da1178362a976.cmd"
+         "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v6.5\bin\nvcc.exe" -gencode=arch=compute_20,code=\"sm_20,compute_20\" --use-local-env --cl-version 2010 -ccbin "C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\x86_amd64"  -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v6.5\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v6.5\include"  -G   --keep-dir x64\Debug -maxrregcount=0  --machine 64 --compile -cudart static  -g   -D_MBCS -Xcompiler "/EHsc /W3 /nologo /Od /Zi /RTC1 /MDd  " -o x64\Debug\cudaFile.cu.obj "C:\Users\Semih\Google Drive\Akademik\Applied Parallel Programming On GPU\Assgn2\Code GPU\cudaFile.cu"
+         
+         C:\Users\Semih\Google Drive\Akademik\Applied Parallel Programming On GPU\Assgn2\Code GPU>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v6.5\bin\nvcc.exe" -gencode=arch=compute_20,code=\"sm_20,compute_20\" --use-local-env --cl-version 2010 -ccbin "C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\x86_amd64"  -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v6.5\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v6.5\include"  -G   --keep-dir x64\Debug -maxrregcount=0  --machine 64 --compile -cudart static  -g   -D_MBCS -Xcompiler "/EHsc /W3 /nologo /Od /Zi /RTC1 /MDd  " -o x64\Debug\cudaFile.cu.obj "C:\Users\Semih\Google Drive\Akademik\Applied Parallel Programming On GPU\Assgn2\Code GPU\cudaFile.cu" 
+         cudaFile.cu
+       ClCompile:
+         All outputs are up-to-date.
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Semih\Google Drive\Akademik\Applied Parallel Programming On GPU\Assgn2\Code GPU\x64\Debug\GPU.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v6.5\lib\x64" cudart.lib nppi.lib npps.lib nppc.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"x64\Debug\GPU.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\Semih\Google Drive\Akademik\Applied Parallel Programming On GPU\Assgn2\Code GPU\x64\Debug\GPU.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Semih\Google Drive\Akademik\Applied Parallel Programming On GPU\Assgn2\Code GPU\x64\Debug\GPU.lib" /MACHINE:X64 x64\Debug\cudaFile.cu.obj
+         x64\Debug\main.obj
+         GPU.vcxproj -> C:\Users\Semih\Google Drive\Akademik\Applied Parallel Programming On GPU\Assgn2\Code GPU\x64\Debug\GPU.exe
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"C:\Users\Semih\Google Drive\Akademik\Applied Parallel Programming On GPU\Assgn2\Code GPU\x64\Debug\GPU.exe;#1" /manifest x64\Debug\GPU.exe.intermediate.manifest
+       PostBuildEvent:
+         echo copy "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v6.5\bin\cudart*.dll" "C:\Users\Semih\Google Drive\Akademik\Applied Parallel Programming On GPU\Assgn2\Code GPU\x64\Debug\"
+         copy "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v6.5\bin\cudart*.dll" "C:\Users\Semih\Google Drive\Akademik\Applied Parallel Programming On GPU\Assgn2\Code GPU\x64\Debug\"
+         :VCEnd
+         copy "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v6.5\bin\cudart*.dll" "C:\Users\Semih\Google Drive\Akademik\Applied Parallel Programming On GPU\Assgn2\Code GPU\x64\Debug\"
+         C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v6.5\bin\cudart32_65.dll
+         C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v6.5\bin\cudart64_65.dll
+                 2 file(s) copied.
+       FinalizeBuildStatus:
+         Deleting file "x64\Debug\GPU.unsuccessfulbuild".
+         Touching "x64\Debug\GPU.lastbuildstate".
+     1>Done Building Project "C:\Users\Semih\Google Drive\Akademik\Applied Parallel Programming On GPU\Assgn2\Code GPU\GPU.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:05.77
